@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:homely/Screens/Home/home.dart';
 import 'package:homely/Screens/Welcome/welcome.dart';
 import 'package:homely/constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(MyApp());
@@ -17,7 +19,43 @@ class MyApp extends StatelessWidget {
         primaryColor: aPrimaryColor,
         scaffoldBackgroundColor: Colors.white,
       ),
-      home: WelcomeScreen(),
+      home: CheckAuth(),
+    );
+  }
+}
+
+class CheckAuth extends StatefulWidget {
+  @override
+  _CheckAuthState createState() => _CheckAuthState();
+}
+
+class _CheckAuthState extends State<CheckAuth> {
+  bool isAuth = false;
+  @override
+  void initState() {
+    _checkIfLoggedIn();
+    super.initState();
+  }
+
+  void _checkIfLoggedIn() async{
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    var token = localStorage.getString('token');
+    if(token != null){
+      setState(() {
+        isAuth = true;
+      });
+    }
+  }
+  @override
+  Widget build(BuildContext context) {
+    Widget child;
+    if (isAuth) {
+      child = HomeScreen();
+    } else {
+      child = WelcomeScreen();
+    }
+    return Scaffold(
+      body: child,
     );
   }
 }
