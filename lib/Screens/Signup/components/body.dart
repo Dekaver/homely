@@ -8,6 +8,7 @@ import 'package:homely/components/rounded_button.dart';
 import 'package:homely/components/rounded_input_field.dart';
 import 'package:homely/components/rounded_password_field.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:homely/constants.dart';
 
 class Body extends StatelessWidget {
   @override
@@ -36,6 +37,9 @@ class Body extends StatelessWidget {
             ),
             RoundedButton(
               text: "SIGNUP",
+              color: aPrimaryColor,
+              rounded: 18.0,
+              textColor: Colors.deepPurple.shade200,
               press: () {},
             ),
             SizedBox(height: size.height * 0.03),

@@ -4,7 +4,6 @@ import 'package:homely/Screens/Signup/signup_screen.dart';
 import 'package:homely/Screens/Welcome/Components/background.dart';
 import 'package:homely/components/rounded_button.dart';
 import 'package:homely/constants.dart';
-import 'package:flutter_svg/svg.dart';
 
 
 class Body extends StatelessWidget {
@@ -15,20 +14,27 @@ class Body extends StatelessWidget {
     return Background(
       child:SingleChildScrollView(
         child: Column(
+          
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            
             Text(
-              "WELCOME TO EDU",
+              "WELCOME TO HOMELY",
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             SizedBox(height: size.height * 0.05),
-            SvgPicture.asset(
-              "assets/icons/chat.svg",
+            Image.asset(
+              'assets/images/house.png',
               height: size.height * 0.45,
             ),
             SizedBox(height: size.height * 0.05),
-            RoundedButton(
-              text: "LOGIN",
+
+            RoundedButton(  
+              text: "login",
+              color: Colors.deepPurple.shade200,
+              textColor: Colors.white,
+              background: MaterialStateProperty.all<Color>(Colors.deepPurple.shade200),
+              rounded: 18.0,
               press: () {
                 Navigator.push(
                   context,
@@ -41,9 +47,10 @@ class Body extends StatelessWidget {
               },
             ),
             RoundedButton(
-              text: "SIGN UP",
+              text: "sign up",
               color: aPrimaryLightColor,
-              textColor: Colors.black,
+              textColor: Colors.deepPurple.shade200,
+              rounded: 18.0,
               press: () {
                 Navigator.push(
                   context,

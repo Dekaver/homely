@@ -26,6 +26,14 @@ class Background extends StatelessWidget {
           ),
           Positioned(
             bottom: 0,
+            right: 0,
+            child: Image.asset(
+              'assets/images/bubbles_pink.png',
+              width: size.width * 0.4
+            ),
+          ),
+          Positioned(
+            bottom: 0,
             left: 0,
             child: Image.asset(
               'assets/images/main_bottom.png',
