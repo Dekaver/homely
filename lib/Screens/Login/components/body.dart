@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:homely/Screens/Home/home.dart';
 import 'package:homely/Screens/Login/components/background.dart';
 import 'package:homely/Screens/Signup/signup_screen.dart';
 import 'package:homely/components/already_have_an_account_acheck.dart';
@@ -7,6 +10,8 @@ import 'package:homely/components/rounded_input_field.dart';
 import 'package:homely/components/rounded_password_field.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:homely/constants.dart';
+import 'package:homely/network_utils/api.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Body extends StatelessWidget {
   const Body({
@@ -16,6 +21,8 @@ class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    TextEditingController emailText = TextEditingController();
+    TextEditingController passwordText = TextEditingController();
     return Background(
       child: SingleChildScrollView(
         child: Column(
@@ -33,9 +40,12 @@ class Body extends StatelessWidget {
             SizedBox(height: size.height * 0.03),
             RoundedInputField(
               hintText: "Your Email",
+              controller: emailText,
               onChanged: (value) {},
             ),
             RoundedPasswordField(
+              hintText: "Password",
+              controller: passwordText,
               onChanged: (value) {},
             ),
             RoundedButton(
@@ -43,7 +53,9 @@ class Body extends StatelessWidget {
               color: aPrimaryColor,
               rounded: 18.0,
               textColor: Colors.deepPurple.shade200,
-              press: () {},
+              press: () {
+                _login(context, emailText.text, passwordText.text);
+              },
             ),
             SizedBox(height: size.height * 0.03),
             AlreadyHaveAnAccountCheck(
@@ -62,5 +74,30 @@ class Body extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _login(BuildContext context, email, password) async {
+    var data = {'email': email, 'password': password};
+
+    var res = await Network().authData(data, '/api/login');
+    var body = json.decode(res.body);
+    if (body['status'] == "success") {
+      SharedPreferences localStorage = await SharedPreferences.getInstance();
+      localStorage.setString('token', json.encode(body['content']['access_token']));
+      localStorage.setString('user', json.encode(body['content']['user']));
+      Navigator.push(
+        context,
+        new MaterialPageRoute(builder: (context) => HomeScreen()),
+      );
+    } else {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            content: Text(body['msg'])
+          );
+        },
+      );
+    }
   }
 }

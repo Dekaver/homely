@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-class Network{
-  final String _url = 'https://8133cc54b5c6.ngrok.io/api/login';
+class Network {
+  final String _url = 'https://8133cc54b5c6.ngrok.io';
   //if you are using android studio emulator, change localhost to 10.0.2.2
   var token;
 
@@ -11,7 +11,7 @@ class Network{
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     token = jsonDecode(localStorage.getString('token'))['token'];
   }
-  
+
   authData(data, apiUrl) async {
     var fullUrl = _url + apiUrl;
     return await http.post(
@@ -31,8 +31,8 @@ class Network{
   }
 
   _setHeaders() => {
-    'Content-type' : 'application/json',
-    'Accept' : 'application/json',
-    'Authorization' : 'Bearer $token'
+    'Content-type': 'application/json',
+    'Accept': 'application/json',
+    'Authorization': 'Bearer $token'
   };
 }
