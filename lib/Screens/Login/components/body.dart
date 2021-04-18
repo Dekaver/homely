@@ -89,6 +89,16 @@ class Body extends StatelessWidget {
         context,
         new MaterialPageRoute(builder: (context) => HomeScreen()),
       );
+    } else if(body['msg'] == 'Validator error'){
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            content: Text(body['content']['email'] == null ? body['content']['password']['0'] : body['content']['email']['0'])
+            // content: Text(body['msg'])
+          );
+        },
+      );
     } else {
       showDialog(
         context: context,
