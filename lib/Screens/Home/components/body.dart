@@ -1,54 +1,188 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:homely/Screens/Login/components/background.dart';
-import 'package:homely/Screens/Login/login_screen.dart';
-import 'package:homely/components/rounded_button.dart';
-import 'package:homely/constants.dart';
-import 'package:homely/network_utils/api.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:homely/Screens/Home/detail.dart';
 
-class Body extends StatelessWidget {
-  const Body({
-    Key key,
-  }) : super(key: key);
+import 'lesson.dart';
 
+class Body extends StatefulWidget {
+  @override
+  _BodyState createState() => _BodyState();
+}
+
+class _BodyState extends State<Body> {
+  List lessons;
+  
+  @override
+  void initState() {
+    lessons = getLessons();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
-    return Background(
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            
-            Text(
-              "Welcome To Home Screen",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            RoundedButton(
-              text: "login",
-              color: aPrimaryColor,
-              rounded: 18.0,
-              textColor: Colors.deepPurple.shade200,
-              press: () {
-                
-              },
-            ),
-          ],
-        ),
+    ListTile makeListTile(Lesson lesson) => ListTile(
+          contentPadding:
+              EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+          leading: Container(
+            padding: EdgeInsets.only(right: 12.0),
+            decoration: new BoxDecoration(
+                border: new Border(
+                    right: new BorderSide(width: 1.0, color: Colors.white24))),
+            child: Icon(Icons.autorenew, color: Colors.white),
+          ),
+          title: Text(
+            lesson.title,
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          ),
+          // subtitle: Text("Intermediate", style: TextStyle(color: Colors.white)),
+
+          subtitle: Row(
+            children: <Widget>[
+              Expanded(
+                  flex: 1,
+                  child: Container(
+                    // tag: 'hero',
+                    child: LinearProgressIndicator(
+                        backgroundColor: Color.fromRGBO(209, 224, 224, 0.2),
+                        value: lesson.indicatorValue,
+                        valueColor: AlwaysStoppedAnimation(Colors.green)),
+                  )),
+              Expanded(
+                flex: 4,
+                child: Padding(
+                    padding: EdgeInsets.only(left: 10.0),
+                    child: Text(lesson.level,
+                        style: TextStyle(color: Colors.white))),
+              )
+            ],
+          ),
+          trailing:
+              Icon(Icons.keyboard_arrow_right, color: Colors.white, size: 30.0),
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => DetailPage(lesson: lesson)));
+          },
+        );
+
+    Card makeCard(Lesson lesson) => Card(
+          elevation: 8.0,
+          margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
+          child: Container(
+            decoration: BoxDecoration(color: Color.fromRGBO(64, 75, 96, .9)),
+            child: makeListTile(lesson),
+          ),
+        );
+
+    
+
+    
+
+    return Container(
+      // decoration: BoxDecoration(color: Color.fromRGBO(58, 66, 86, 1.0)),
+      child: ListView.builder(
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        itemCount: lessons.length,
+        itemBuilder: (BuildContext context, int index) {
+          return makeCard(lessons[index]);
+        },
       ),
     );
+    // return Container(
+    //   child: ListView.builder(
+    //     scrollDirection: Axis.vertical,
+    //     shrinkWrap: true,
+    //     itemCount: 7,
+    //     itemBuilder: (BuildContext context, int index) {
+    //       return Card(
+    //         elevation: 8.0,
+    //         margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
+    //         child: Container(
+    //           decoration: BoxDecoration(color: Color.fromRGBO(64, 75, 96, .9)),
+    //           child: ListTile(
+    //               contentPadding:
+    //                   EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+    //               leading: Container(
+    //                 padding: EdgeInsets.only(right: 12.0),
+    //                 decoration: new BoxDecoration(
+    //                     border: new Border(
+    //                         right: new BorderSide(
+    //                             width: 1.0, color: Colors.white24))),
+    //                 child: Icon(Icons.autorenew, color: Colors.white),
+    //               ),
+    //               title: Text(
+    //                 "Introduction to Driving",
+    //                 style: TextStyle(
+    //                     color: Colors.white, fontWeight: FontWeight.bold),
+    //               ),
+    //               // subtitle: Text("Intermediate", style: TextStyle(color: Colors.white)),
+
+    //               subtitle: Row(
+    //                 children: <Widget>[
+    //                   Icon(Icons.linear_scale, color: Colors.yellowAccent),
+    //                   Text(" Intermediate",
+    //                       style: TextStyle(color: Colors.white))
+    //                 ],
+    //               ),
+    //               trailing: Icon(Icons.keyboard_arrow_right,
+    //                   color: Colors.white, size: 30.0)),
+    //         ),
+    //       );
+    //     },
+    //   ),
+    // );
   }
-  void logout(BuildContext context) async{
-    var res = await Network().getData('/api/logout');
-    var body = json.decode(res.body);
-    if(body['success']){
-      SharedPreferences localStorage = await SharedPreferences.getInstance();
-      localStorage.remove('user');
-      localStorage.remove('token');
-      Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context)=>LoginScreen()));
-    }
-  }
+}
+List getLessons() {
+  return [
+    Lesson(
+        title: "Introduction to Driving",
+        level: "Beginner",
+        indicatorValue: 0.33,
+        price: 20,
+        content:
+            "Start by taking a couple of minutes to read the info in this section. Launch your app and click on the Settings menu.  While on the settings page, click the Save button.  You should see a circular progress indicator display in the middle of the page and the user interface elements cannot be clicked due to the modal barrier that is constructed."),
+    Lesson(
+        title: "Observation at Junctions",
+        level: "Beginner",
+        indicatorValue: 0.33,
+        price: 50,
+        content:
+            "Start by taking a couple of minutes to read the info in this section. Launch your app and click on the Settings menu.  While on the settings page, click the Save button.  You should see a circular progress indicator display in the middle of the page and the user interface elements cannot be clicked due to the modal barrier that is constructed."),
+    Lesson(
+        title: "Reverse parallel Parking",
+        level: "Intermidiate",
+        indicatorValue: 0.66,
+        price: 30,
+        content:
+            "Start by taking a couple of minutes to read the info in this section. Launch your app and click on the Settings menu.  While on the settings page, click the Save button.  You should see a circular progress indicator display in the middle of the page and the user interface elements cannot be clicked due to the modal barrier that is constructed."),
+    Lesson(
+        title: "Reversing around the corner",
+        level: "Intermidiate",
+        indicatorValue: 0.66,
+        price: 30,
+        content:
+            "Start by taking a couple of minutes to read the info in this section. Launch your app and click on the Settings menu.  While on the settings page, click the Save button.  You should see a circular progress indicator display in the middle of the page and the user interface elements cannot be clicked due to the modal barrier that is constructed."),
+    Lesson(
+        title: "Incorrect Use of Signal",
+        level: "Advanced",
+        indicatorValue: 1.0,
+        price: 50,
+        content:
+            "Start by taking a couple of minutes to read the info in this section. Launch your app and click on the Settings menu.  While on the settings page, click the Save button.  You should see a circular progress indicator display in the middle of the page and the user interface elements cannot be clicked due to the modal barrier that is constructed."),
+    Lesson(
+        title: "Engine Challenges",
+        level: "Advanced",
+        indicatorValue: 1.0,
+        price: 50,
+        content:
+            "Start by taking a couple of minutes to read the info in this section. Launch your app and click on the Settings menu.  While on the settings page, click the Save button.  You should see a circular progress indicator display in the middle of the page and the user interface elements cannot be clicked due to the modal barrier that is constructed."),
+    Lesson(
+        title: "Self Driving Car",
+        level: "Advanced",
+        indicatorValue: 1.0,
+        price: 50,
+        content:
+            "Start by taking a couple of minutes to read the info in this section. Launch your app and click on the Settings menu.  While on the settings page, click the Save button.  You should see a circular progress indicator display in the middle of the page and the user interface elements cannot be clicked due to the modal barrier that is constructed.  ")
+  ];
 }

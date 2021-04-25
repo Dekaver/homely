@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:homely/Screens/Home/home.dart';
+import 'package:homely/Screens/Main/main.dart';
 import 'package:homely/Screens/Welcome/welcome.dart';
 import 'package:homely/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -50,7 +50,7 @@ class _CheckAuthState extends State<CheckAuth> {
   Widget build(BuildContext context) {
     Widget child;
     if (isAuth) {
-      child = HomeScreen();
+      child = MainScreen();
     } else {
       child = WelcomeScreen();
     }

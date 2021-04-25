@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:homely/Screens/Home/home.dart';
+import 'package:homely/Screens/Main/main.dart';
 import 'package:homely/Screens/Login/components/background.dart';
 import 'package:homely/Screens/Signup/signup_screen.dart';
 import 'package:homely/components/already_have_an_account_acheck.dart';
@@ -85,9 +85,12 @@ class Body extends StatelessWidget {
       SharedPreferences localStorage = await SharedPreferences.getInstance();
       localStorage.setString('token', json.encode(body['content']['access_token']));
       localStorage.setString('user', json.encode(body['content']['user']));
-      Navigator.push(
+      Navigator.pushAndRemoveUntil(
         context,
-        new MaterialPageRoute(builder: (context) => HomeScreen()),
+        new MaterialPageRoute(
+            builder: (context) => MainScreen()
+        ),
+        (Route<dynamic> route) => false
       );
     } else if(body['msg'] == 'Validator error'){
       showDialog(

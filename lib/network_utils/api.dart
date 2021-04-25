@@ -3,13 +3,13 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Network {
-  final String _url = 'https://8133cc54b5c6.ngrok.io';
+  final String _url = 'https://82308c24e5d2.ngrok.io';
   //if you are using android studio emulator, change localhost to 10.0.2.2
   var token;
 
   _getToken() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
-    token = jsonDecode(localStorage.getString('token'))['token'];
+    token = jsonDecode(localStorage.getString('token'));
   }
 
   authData(data, apiUrl) async {
