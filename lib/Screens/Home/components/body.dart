@@ -64,7 +64,7 @@ class _BodyState extends State<Body> {
           },
         );
 
-    Card makeCard(Lesson lesson) => Card(
+        Card makeCard(Lesson lesson) => Card(
           elevation: 8.0,
           margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
           child: Container(
@@ -72,10 +72,6 @@ class _BodyState extends State<Body> {
             child: makeListTile(lesson),
           ),
         );
-
-    
-
-    
 
     return Container(
       // decoration: BoxDecoration(color: Color.fromRGBO(58, 66, 86, 1.0)),
