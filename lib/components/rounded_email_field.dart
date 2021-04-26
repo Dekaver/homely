@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:homely/components/text_field_container.dart';
 import 'package:homely/constants.dart';
 
-class RoundedPasswordField extends StatelessWidget {
-  final ValueChanged<String> onChanged;
+class RoundedEmailField extends StatelessWidget {
   final String hintText;
+  final IconData icon;
   final TextEditingController controller;
-  const RoundedPasswordField({
+  final ValueChanged<String> onChanged;
+  const RoundedEmailField({
     Key key,
     this.hintText,
+    this.icon = Icons.person,
     this.onChanged,
     this.controller,
   }) : super(key: key);
@@ -17,22 +19,17 @@ class RoundedPasswordField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFieldContainer(
       child: TextFormField(
-        obscureText: true,
-        onChanged: onChanged,
         controller: controller,
-        validator: PasswordFieldValidator.validate,
-        keyboardType: TextInputType.visiblePassword,
+        onChanged: onChanged,
+        validator: EmailFieldValidator.validate,
+        keyboardType: TextInputType.emailAddress,
         cursorColor: aPrimaryColor,
         decoration: InputDecoration(
-          hintText: hintText,
           icon: Icon(
-            Icons.lock,
+            icon,
             color: aPrimaryColor,
           ),
-          suffixIcon: Icon(
-            Icons.visibility,
-            color: aPrimaryColor,
-          ),
+          hintText: hintText,
           border: InputBorder.none,
         ),
       ),
@@ -40,12 +37,8 @@ class RoundedPasswordField extends StatelessWidget {
   }
 }
 
-class PasswordFieldValidator {
+class EmailFieldValidator {
   static String validate(String value) {
-    var panjang = value.length;
-    if (panjang < 8) {
-      return 'Password must be 8 characters or more';
-    }
-    return value.isEmpty ? 'Password can\'t be Empty' : null;
+    return value.isEmpty ? 'Email can\'t be Empty' : null;
   }
 }

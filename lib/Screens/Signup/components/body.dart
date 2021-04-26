@@ -7,6 +7,7 @@ import 'package:homely/Screens/Signup/components/or_divider.dart';
 import 'package:homely/Screens/Signup/components/social_icon.dart';
 import 'package:homely/components/already_have_an_account_acheck.dart';
 import 'package:homely/components/rounded_button.dart';
+import 'package:homely/components/rounded_email_field.dart';
 import 'package:homely/components/rounded_input_field.dart';
 import 'package:homely/components/rounded_password_field.dart';
 import 'package:flutter_svg/svg.dart';
@@ -41,7 +42,7 @@ class Body extends StatelessWidget {
               controller: nameText,
               onChanged: (value) {},
             ),
-            RoundedInputField(
+            RoundedEmailField(
               hintText: "Your Email",
               controller: emailText,
               onChanged: (value) {},
