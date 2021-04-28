@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'components/lesson.dart';
+import 'components/body.dart';
 
 class DetailPage extends StatelessWidget {
-  final Lesson lesson;
-  DetailPage({Key key, this.lesson}) : super(key: key);
+  final House house;
+  DetailPage({Key key, this.house}) : super(key: key);
   @override
   Widget build(BuildContext context) {
 
@@ -44,7 +44,7 @@ class DetailPage extends StatelessWidget {
                       ),
                       SizedBox(height: 10.0),
                       Text(
-                        lesson.title,
+                        house.kategori,
                         style: TextStyle(color: Colors.white, fontSize: 45.0),
                       ),
                       SizedBox(height: 30.0),
@@ -56,7 +56,7 @@ class DetailPage extends StatelessWidget {
                             child: Container(
                               child: LinearProgressIndicator(
                                 backgroundColor: Color.fromRGBO(209, 224, 224, 0.2),
-                                value: lesson.indicatorValue,
+                                value: 0.9,
                                 valueColor: AlwaysStoppedAnimation(Colors.green)),
                               ),
                             ),
@@ -65,7 +65,7 @@ class DetailPage extends StatelessWidget {
                               child: Padding(
                                   padding: EdgeInsets.only(left: 10.0),
                                   child: Text(
-                                    lesson.level,
+                                    house.kontak,
                                     style: TextStyle(color: Colors.white),
                                   ))),
                           Expanded(
@@ -76,7 +76,7 @@ class DetailPage extends StatelessWidget {
                                   border: new Border.all(color: Colors.white),
                                   borderRadius: BorderRadius.circular(5.0)),
                               child: new Text(
-                                "\$" + lesson.price.toString(),
+                                "\$" + house.tipe,
                                 style: TextStyle(color: Colors.white),
                               ),
                             ),
@@ -108,7 +108,7 @@ class DetailPage extends StatelessWidget {
                 children: <Widget>[
                   //bottomContentText
                   Text(
-                    lesson.content,
+                    house.deskripsi,
                     style: TextStyle(fontSize: 18.0),
                   ),
                   //readButton
@@ -119,7 +119,7 @@ class DetailPage extends StatelessWidget {
                       onPressed: () => {},
                       color: Color.fromRGBO(58, 66, 86, 1.0),
                       child:
-                          Text("TAKE THIS LESSON", style: TextStyle(color: Colors.white)),
+                          Text("TAKE THIS house", style: TextStyle(color: Colors.white)),
                     )
                   ),
                 ],

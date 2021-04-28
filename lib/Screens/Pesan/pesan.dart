@@ -4,8 +4,6 @@ import 'package:homely/Screens/Pesan/components/body.dart';
 class PesanScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Body(),
-    );
+    return Body();
   }
 }
