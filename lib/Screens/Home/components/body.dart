@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:homely/Screens/Home/detail.dart';
 import 'package:intl/intl.dart';
-import 'dart:convert';
 
 class House {
   String tipe;

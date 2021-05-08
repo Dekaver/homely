@@ -1,8 +1,8 @@
-import 'dart:convert';
+// import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:homely/Screens/Welcome/welcome.dart';
-import 'package:homely/network_utils/api.dart';
+// import 'package:homely/network_utils/api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Body extends StatelessWidget {
@@ -66,8 +66,8 @@ class Body extends StatelessWidget {
   }
 
   void _logout(BuildContext context) async {
-    var res = await Network().getData('/api/logout');
-    var body = json.decode(res.body);
+    // var res = await Network().getData('/api/logout');
+    // var body = json.decode(res.body);
     // if (body['success']) {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     localStorage.remove('user');
