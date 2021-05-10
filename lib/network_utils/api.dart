@@ -3,8 +3,8 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Network {
-  final String _url = 'https://71851db760cf.ngrok.io';
-  
+  final String _url = 'https://02cf50a88822.ngrok.io';
+
   var token;
 
   _getToken() async {
@@ -14,25 +14,19 @@ class Network {
 
   authData(data, apiUrl) async {
     var fullUrl = _url + apiUrl;
-    return await http.post(
-        fullUrl,
-        body: jsonEncode(data),
-        headers: _setHeaders()
-    );
+    return await http.post(fullUrl,
+        body: jsonEncode(data), headers: _setHeaders());
   }
 
   getData(apiUrl) async {
     var fullUrl = _url + apiUrl;
-    await _getToken();
-    return await http.get(
-        fullUrl,
-        headers: _setHeaders()
-    );
+    this._getToken();
+    return await http.get(Uri.encodeFull(fullUrl), headers: _setHeaders());
   }
 
   _setHeaders() => {
-    'Content-type': 'application/json',
-    'Accept': 'application/json',
-    'Authorization': 'Bearer $token'
-  };
+        'Content-type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token'
+      };
 }

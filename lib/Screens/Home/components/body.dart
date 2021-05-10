@@ -1,60 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:homely/Screens/Home/detail.dart';
+import 'package:homely/network_utils/api.dart';
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:intl/intl.dart';
-
-class House {
-  String tipe;
-  String kategori;
-  String lantai;
-  String kamarTidur;
-  String kamarMandi;
-  String sertifikasi;
-  String luasTanah;
-  String harga;
-  String luasBangunan;
-  String alamat;
-  String lokasiGps;
-  String deskripsi;
-  String kontak;
-
-  House(
-      {this.tipe,
-      this.kategori,
-      this.harga,
-      this.lantai,
-      this.kamarTidur,
-      this.kamarMandi,
-      this.sertifikasi,
-      this.luasTanah,
-      this.luasBangunan,
-      this.alamat,
-      this.lokasiGps,
-      this.deskripsi,
-      this.kontak});
-}
 
 class Body extends StatefulWidget {
   @override
-  _BodyState createState() => _BodyState();
+  _BodyState createState() => new _BodyState();
 }
 
-class _BodyState extends State<Body> {
+class _BodyState extends State {
   List houses;
+  bool isLoading;
+
+  Future<String> getData() async {
+    setState(() {
+      isLoading = true;
+    });
+    var res = await new Network().getData('/api/houses');
+    houses = json.decode(res.body);
+
+    // await Future.delayed(const Duration(seconds: 2));
+    setState(() {
+      isLoading = false;
+    });
+    return "Success!";
+  }
 
   @override
+  // ignore: must_call_super
   void initState() {
-    houses = gethouses();
-    super.initState();
+    this.getData();
   }
 
   @override
   Widget build(BuildContext context) {
-
-    String toRupiah(String str){
+    String toRupiah(String str) {
       return 'Rp.' + NumberFormat('#,##0.00', 'ID').format(int.parse(str));
     }
 
-    Container makeCard(House house) => new Container(
+    Container makeCard(house) => new Container(
           child: Container(
               height: 120.0,
               margin: const EdgeInsets.symmetric(
@@ -72,13 +59,13 @@ class _BodyState extends State<Body> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Container(height: 4.0),
-                          Text(toRupiah(house.harga),
+                          Text(toRupiah(house['harga'].toString()),
                               style: TextStyle(fontFamily: 'Poppins').copyWith(
                                   color: Colors.white,
                                   fontSize: 18.0,
                                   fontWeight: FontWeight.w600)),
                           Container(height: 10.0),
-                          Text(house.alamat.substring(0, 36) + '...',
+                          Text(house['alamat'] + '...',
                               style: TextStyle(fontFamily: 'Poppins')
                                   .copyWith(
                                       color: Colors.grey,
@@ -96,7 +83,7 @@ class _BodyState extends State<Body> {
                                   child: Row(children: <Widget>[
                                 Icon(Icons.bathtub, size: 12.0),
                                 Container(width: 8.0),
-                                Text(house.kamarMandi),
+                                Text(house['alamat']),
                               ])),
                               Expanded(
                                   child: Row(children: <Widget>[
@@ -105,13 +92,13 @@ class _BodyState extends State<Body> {
                                   size: 12.0,
                                 ),
                                 Container(width: 8.0),
-                                Text(house.kamarTidur),
+                                Text(house['alamat']),
                               ])),
                               Expanded(
                                   child: Row(children: <Widget>[
                                 Icon(Icons.zoom_out_map, size: 12.0),
                                 Container(width: 8.0),
-                                Text(house.luasTanah),
+                                Text(house['luas_tanah'].toString()),
                               ])),
                             ],
                           ),
@@ -166,69 +153,15 @@ class _BodyState extends State<Body> {
               )),
         );
 
-    return Container(
-      child: ListView.builder(
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
-        itemCount: houses.length,
-        itemBuilder: (BuildContext context, int index) {
-          return makeCard(houses[index]);
-        },
-      ),
-    );
+    return isLoading
+        ? Center(
+            child: CircularProgressIndicator(),
+          )
+        : ListView.builder(
+            itemCount: houses == null ? 0 : houses.length,
+            itemBuilder: (BuildContext context, int index) {
+              return makeCard(houses[index]);
+            },
+          );
   }
-}
-
-// onTap:
-List gethouses() {
-  return [
-    House(
-      tipe: '46',
-      kategori: 'clasik',
-      lantai: '2',
-      kamarTidur: '4',
-      kamarMandi: '2',
-      sertifikasi: 'Sertifikat',
-      luasTanah: '200',
-      harga: '175000000',
-      luasBangunan: '150',
-      alamat:
-          'Jln. Batu ampar, Km.4, Kecamatan Balikpapan Utara, Kota Balikpapan, Kabupaten Kalimantan Timur',
-      lokasiGps: '1231313213231 1232132112123',
-      deskripsi: 'Rumah ini memiliki 2 pintu depan',
-      kontak: '081250137084',
-    ),
-    House(
-      tipe: '46',
-      kategori: 'Jungle',
-      lantai: '2',
-      kamarTidur: '4',
-      kamarMandi: '2',
-      sertifikasi: 'Sertifikat',
-      luasTanah: '200',
-      harga: '155000000',
-      luasBangunan: '150',
-      alamat:
-          'Jln. Batu ampar, Km.4, Kecamatan Balikpapan Utara, Kota Balikpapan, Kabupaten Kalimantan Timur',
-      lokasiGps: '1231313213231 1232132112123',
-      deskripsi: 'Rumah ini memiliki 2 pintu depan',
-      kontak: '081250137084',
-    ),
-    House(
-      tipe: '46',
-      kategori: 'Istana',
-      lantai: '2',
-      kamarTidur: '4',
-      kamarMandi: '2',
-      sertifikasi: 'Sertifikat',
-      luasTanah: '200',
-      harga: '190000000',
-      luasBangunan: '150',
-      alamat:
-          'Jln. Batu ampar, Km.4, Kecamatan Balikpapan Utara, Kota Balikpapan, Kabupaten Kalimantan Timur',
-      lokasiGps: '1231313213231 1232132112123',
-      deskripsi: 'Rumah ini memiliki 2 pintu depan',
-      kontak: '081250137084',
-    ),
-  ];
 }
