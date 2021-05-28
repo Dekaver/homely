@@ -1,80 +1,49 @@
 import 'package:flutter/material.dart';
+import 'package:homely/Screens/About/about.dart';
 
 class Sidebar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            DrawerHeader(
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: <Widget>[
+          DrawerHeader(
               margin: EdgeInsets.zero,
               padding: EdgeInsets.zero,
               decoration: BoxDecoration(
-                image: DecorationImage(
-                  fit: BoxFit.fill,
-                  image:  AssetImage('assets/images/bubbles_pink.png'))),
-              child: Stack(
-                children: <Widget>[
+                  image: DecorationImage(
+                      fit: BoxFit.fill,
+                      image: AssetImage(
+                          'assets/images/Foto-rumah-sederhana-tapi-elegan.jpg'))),
+              child: Stack(children: <Widget>[
                 Positioned(
-                  bottom: 12.0,
-                  left: 16.0,
-                  child: Text("Homely",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.w500
-                    )
-                  )
-                ),
-              ])
-            ),
-            ListTile(
-              // leading: Icon(Icons.alarm),
+                    bottom: 13.0,
+                    left: 75.0,
+                    child: Text("Homelyy",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 14.0,
+                            fontWeight: FontWeight.w500))),
+              ])),
+          Divider(),
+          ListTile(
               title: Row(
                 children: <Widget>[
-                  Icon(Icons.alarm),
+                  Icon(Icons.info_outline_rounded),
                   Padding(
-                    padding: EdgeInsets.only(left: 8.0),
-                    child: Text('Alarm')
-                  )
+                      padding: EdgeInsets.only(left: 8.0), child: Text('About'))
                 ],
               ),
               onTap: () {
-                print("Change page");
-                Navigator.pop(context);
-              },
-            ),
-             ListTile(
-              leading: Icon(Icons.ac_unit),
-              title: Text("AC"),
-              onTap: () {
-                // Change the applications state
-                print("Change page");
-                Navigator.pop(context);
-              },
-            ),
-            Divider(),
-             ListTile(
-              leading: Icon(Icons.directions_bike),
-              title: Text("Bike"),
-              onTap: () {
-                // Change the applications state
-                print("SIlahkan Pindah Halaman");
-                Navigator.pop(context);
-              },
-            ),
-             ListTile(
-              leading: Icon(Icons.chrome_reader_mode),
-              title: Text("Read"),
-              onTap: () {
-                // Change the applications state
-                print("Silahkan Pindah Halaman");
-                Navigator.pop(context);
-              },
-            ),
-          ],
-        ),
-      );
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => AboutScreen(),
+                    ));
+              }),
+        ],
+      ),
+    );
   }
 }

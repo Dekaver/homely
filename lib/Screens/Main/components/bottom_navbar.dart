@@ -44,11 +44,6 @@ class BottomNavbar extends StatelessWidget {
           ),
         ],
         onTap: press
-        // (index) {
-        //   setState(() {
-        //     _currentIndex = index;
-        //   });
-        // },
         );
   }
 }
