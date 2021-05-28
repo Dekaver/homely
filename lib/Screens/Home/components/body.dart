@@ -43,65 +43,71 @@ class _BodyState extends State {
     }
 
     Container makeCard(house) => new Container(
-          padding: EdgeInsets.symmetric(vertical: 10),
-          child: Row(
-            children: <Widget>[
-              Expanded(
-                  child: Container(
-                      alignment: FractionalOffset.bottomLeft,
-                      height: size.height * 0.2,
-                      child: TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      DetailPage(house: house)));
-                        },
-                        child: Card(
-                          color: Colors.blue.shade400,
-                          child: Column(
-                            children: <Widget>[
-                              Container(
-                                child:Image(
-                                image: AssetImage(
-                                    'assets/images/Foto-rumah-sederhana-tapi-elegan.jpg'),
-                                height: size.height * 0.12,
-                                // width: size.width * 0.4,
-                              ),
-                              ),
-                              Container(
-                                color: Colors.red,
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  SizedBox(
-                                    width: size.width * 0.02,
-                                  ),
-                                  Text(toRupiah(house['harga']))
-                                ],
-                              )
-
-                              ),
-                            ],
+        alignment: FractionalOffset.bottomLeft,
+        padding: EdgeInsets.symmetric(vertical: 10),
+        height: size.height * 0.2,
+        child: TextButton(
+          onPressed: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => DetailPage(house: house)));
+          },
+          child: Card(
+            color: Colors.purple.shade900,
+            child: Column(
+              children: <Widget>[
+                Container(
+                  child: Image(
+                    image: NetworkImage(Network()
+                        .getUrl('/images/' + house['images'][0]['nama'])),
+                    height: 110,
+                  ),
+                ),
+                Container(
+                    // color: Colors.red,
+                    padding: EdgeInsets.only(top: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          toRupiah(house['harga']),
+                          style: TextStyle(
+                            color: Colors.yellowAccent,
+                            fontSize: 18,
                           ),
-                        ),
-                      ))),
-            ],
+                          textAlign: TextAlign.center,
+                        )
+                      ],
+                    )),
+                Container(
+                  padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                  decoration: BoxDecoration(
+                      color: Colors.yellow,
+                      borderRadius: BorderRadius.circular(5)),
+                  // color: Colors.yellowAccent,
+                  child: Text(
+                    "Go →",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                )
+              ],
+            ),
           ),
-        );
+        ));
 
     return isLoading
         ? Center(
             child: CircularProgressIndicator(),
           )
         : GridView.builder(
-            // itemCount: houses == null ? 0 : houses.length,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-            itemCount: 10,
+            itemCount: houses == null ? 0 : houses.length,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2),
+            // itemCount: 10,
             itemBuilder: (BuildContext context, int index) {
-              return makeCard(houses[0]);
-            }, 
+              return makeCard(houses[index]);
+            },
           );
   }
 }

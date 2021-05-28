@@ -3,8 +3,8 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Network {
-  final String _urls = 'https://47a3677ef81e.ngrok.io';
-  final String _url = 'http://47a3677ef81e.ngrok.io';
+  final String _urls = 'https://369584347ce1.ngrok.io';
+  final String _url = 'http://369584347ce1.ngrok.io';
 
   var token;
 

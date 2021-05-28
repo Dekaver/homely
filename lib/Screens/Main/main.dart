@@ -27,14 +27,14 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.purpleAccent,
+        backgroundColor: Colors.purple.shade900,
         title: Text('Homely'),
       ),
       
       drawer: Sidebar(),
       body: tabs[_currentIndex],
       bottomNavigationBar: BottomNavbar(
-        bgcolor: Colors.purpleAccent,
+        bgcolor: Colors.purple.shade900,
         index: _currentIndex,
         press: (index) {
           setState(() {
