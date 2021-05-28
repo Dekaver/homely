@@ -137,7 +137,7 @@ class Body extends StatelessWidget {
         context: context,
         builder: (context) {
           return AlertDialog(
-            content: Text(body['content'])
+            content: Text(body['content'] == null ? '' : body['content'])
           );
         },
       );

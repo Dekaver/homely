@@ -35,6 +35,7 @@ class _MainScreenState extends State<MainScreen> {
       body: tabs[_currentIndex],
       bottomNavigationBar: BottomNavbar(
         bgcolor: Colors.purpleAccent,
+        index: _currentIndex,
         press: (index) {
           setState(() {
             _currentIndex = index;

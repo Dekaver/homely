@@ -37,105 +37,20 @@ class _BodyState extends State {
 
   @override
   Widget build(BuildContext context) {
-    String toRupiah(String str) {
-      return 'Rp.' + NumberFormat('#,##0.00', 'ID').format(int.parse(str));
+    Size size = MediaQuery.of(context).size;
+    String toRupiah(int str) {
+      return 'Rp.' + NumberFormat('#,##0.00', 'ID').format(str);
     }
 
     Container makeCard(house) => new Container(
-          child: Container(
-              height: 120.0,
-              margin: const EdgeInsets.symmetric(
-                vertical: 16.0,
-                horizontal: 24.0,
-              ),
-              child: Stack(
-                children: <Widget>[
-                  //card
-                  Container(
-                    child: Container(
-                      margin: EdgeInsets.fromLTRB(76.0, 16.0, 36.0, 16.0),
-                      constraints: BoxConstraints.expand(),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Container(height: 4.0),
-                          Text(toRupiah(house['harga'].toString()),
-                              style: TextStyle(fontFamily: 'Poppins').copyWith(
-                                  color: Colors.white,
-                                  fontSize: 18.0,
-                                  fontWeight: FontWeight.w600)),
-                          Container(height: 10.0),
-                          Text(house['alamat'] + '...',
-                              style: TextStyle(fontFamily: 'Poppins')
-                                  .copyWith(
-                                      color: Colors.grey,
-                                      fontSize: 9.0,
-                                      fontWeight: FontWeight.w400)
-                                  .copyWith(fontSize: 12.0)),
-                          Container(
-                              margin: EdgeInsets.symmetric(vertical: 8.0),
-                              height: 2.0,
-                              width: 18.0,
-                              color: Color(0xffffc6ff)),
-                          Row(
-                            children: <Widget>[
-                              Expanded(
-                                  child: Row(children: <Widget>[
-                                Icon(Icons.bathtub, size: 12.0),
-                                Container(width: 8.0),
-                                Text(house['alamat']),
-                              ])),
-                              Expanded(
-                                  child: Row(children: <Widget>[
-                                Icon(
-                                  Icons.king_bed,
-                                  size: 12.0,
-                                ),
-                                Container(width: 8.0),
-                                Text(house['alamat']),
-                              ])),
-                              Expanded(
-                                  child: Row(children: <Widget>[
-                                Icon(Icons.zoom_out_map, size: 12.0),
-                                Container(width: 8.0),
-                                Text(house['luas_tanah'].toString()),
-                              ])),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    height: 124.0,
-                    margin: EdgeInsets.only(left: 46.0),
-                    decoration: BoxDecoration(
-                      color: Colors.deepPurple.shade500,
-                      shape: BoxShape.rectangle,
-                      borderRadius: BorderRadius.circular(8.0),
-                      boxShadow: <BoxShadow>[
-                        BoxShadow(
-                          color: Colors.black12,
-                          blurRadius: 10.0,
-                          offset: Offset(0.0, 10.0),
-                        ),
-                      ],
-                    ),
-                  ),
-                  //Card Image
-                  Container(
-                    margin: EdgeInsets.symmetric(vertical: 16.0),
-                    alignment: FractionalOffset.centerLeft,
-                    child: Image(
-                      image: AssetImage(
-                          'assets/images/Foto-rumah-sederhana-tapi-elegan.jpg'),
-                      height: 92.0,
-                      width: 92.0,
-                    ),
-                  ),
-                  //Button right
-                  Container(
-                    margin: EdgeInsets.symmetric(vertical: 16.0),
-                    alignment: FractionalOffset.centerRight,
-                    child: TextButton(
+          padding: EdgeInsets.symmetric(vertical: 10),
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                  child: Container(
+                      alignment: FractionalOffset.bottomLeft,
+                      height: size.height * 0.2,
+                      child: TextButton(
                         onPressed: () {
                           Navigator.push(
                               context,
@@ -143,25 +58,50 @@ class _BodyState extends State {
                                   builder: (context) =>
                                       DetailPage(house: house)));
                         },
-                        child: Icon(
-                          Icons.keyboard_arrow_right_rounded,
-                          size: 50,
-                          color: Colors.grey,
-                        )),
-                  ),
-                ],
-              )),
+                        child: Card(
+                          color: Colors.blue.shade400,
+                          child: Column(
+                            children: <Widget>[
+                              Container(
+                                child:Image(
+                                image: AssetImage(
+                                    'assets/images/Foto-rumah-sederhana-tapi-elegan.jpg'),
+                                height: size.height * 0.12,
+                                // width: size.width * 0.4,
+                              ),
+                              ),
+                              Container(
+                                color: Colors.red,
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  SizedBox(
+                                    width: size.width * 0.02,
+                                  ),
+                                  Text(toRupiah(house['harga']))
+                                ],
+                              )
+
+                              ),
+                            ],
+                          ),
+                        ),
+                      ))),
+            ],
+          ),
         );
 
     return isLoading
         ? Center(
             child: CircularProgressIndicator(),
           )
-        : ListView.builder(
-            itemCount: houses == null ? 0 : houses.length,
+        : GridView.builder(
+            // itemCount: houses == null ? 0 : houses.length,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+            itemCount: 10,
             itemBuilder: (BuildContext context, int index) {
-              return makeCard(houses[index]);
-            },
+              return makeCard(houses[0]);
+            }, 
           );
   }
 }
