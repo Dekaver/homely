@@ -42,16 +42,19 @@ class Body extends StatelessWidget {
               ),
               SizedBox(height: size.height * 0.03),
               RoundedEmailField(
+                key: Key("signinEmailField"),
                 hintText: "Your Email",
                 controller: emailText,
                 onChanged: (value) {},
               ),
               RoundedPasswordField(
+                key:Key('signinPasswordField'),
                 hintText: "Password",
                 controller: passwordText,
                 onChanged: (value) {},
               ),
               RoundedButton(
+                key:Key('loginButton'),
                 text: "login",
                 color: aPrimaryColor,
                 rounded: 18.0,

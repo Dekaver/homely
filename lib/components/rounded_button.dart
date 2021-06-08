@@ -24,6 +24,7 @@ class RoundedButton extends StatelessWidget {
       margin: EdgeInsets.symmetric(vertical: 10),
       width: size.width * 0.8,
       child: TextButton(
+        key:key,
         child: Text(text.toUpperCase(), style: TextStyle(fontSize: 14)),
         style: ButtonStyle(
             padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(15)),

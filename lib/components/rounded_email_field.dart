@@ -19,6 +19,7 @@ class RoundedEmailField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFieldContainer(
       child: TextFormField(
+        key: key,
         controller: controller,
         onChanged: onChanged,
         validator: EmailFieldValidator.validate,

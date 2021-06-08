@@ -45,7 +45,7 @@ class _BodyState extends State {
     Container makeCard(house) => new Container(
         alignment: FractionalOffset.bottomLeft,
         padding: EdgeInsets.symmetric(vertical: 10),
-        height: size.height * 0.2,
+        // height: size.height * 0.1,
         child: TextButton(
           onPressed: () {
             Navigator.push(
@@ -61,7 +61,7 @@ class _BodyState extends State {
                   child: Image(
                     image: NetworkImage(Network()
                         .getUrl('/images/' + house['images'][0]['nama'])),
-                    height: 110,
+                    height: 50,
                   ),
                 ),
                 Container(
