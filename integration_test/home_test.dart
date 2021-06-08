@@ -45,8 +45,8 @@ void main() {
   });
 
   testWidgets("validate test drive ", (WidgetTester tester) async {
-    final Finder signInEmailField = find.byKey(Key('signInEmailField'));
-    final Finder signInSaveButton = find.byKey(Key('signInSaveButton'));
+    final Finder signInEmailField = find.byKey(Key('signinEmailField'));
+    final Finder signInSaveButton = find.byKey(Key('loginButton'));
 
     await tester.pumpWidget(MyApp());
 
