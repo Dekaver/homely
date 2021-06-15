@@ -9,6 +9,7 @@ import 'package:homely/components/rounded_button.dart';
 import 'package:homely/components/rounded_email_field.dart';
 import 'package:homely/components/rounded_password_field.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:homely/components/text_field_container.dart';
 import 'package:homely/constants.dart';
 import 'package:homely/network_utils/api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -41,29 +42,68 @@ class Body extends StatelessWidget {
                 height: size.height * 0.35,
               ),
               SizedBox(height: size.height * 0.03),
-              RoundedEmailField(
-                key: Key("signinEmailField"),
-                hintText: "Your Email",
-                controller: emailText,
-                onChanged: (value) {},
+              TextFieldContainer(
+                child: TextFormField(
+                  key: Key("signinEmailField"),
+                  controller: emailText,
+                  validator: EmailFieldValidator.validate,
+                  keyboardType: TextInputType.emailAddress,
+                  cursorColor: aPrimaryColor,
+                  decoration: InputDecoration(
+                    icon: Icon(
+                      Icons.person,
+                      color: aPrimaryColor,
+                    ),
+                    hintText: "Your Email",
+                    border: InputBorder.none,
+                  ),
+                ),
               ),
-              RoundedPasswordField(
-                key:Key('signinPasswordField'),
-                hintText: "Password",
-                controller: passwordText,
-                onChanged: (value) {},
+              TextFieldContainer(
+                child: TextFormField(
+                  key: Key('signinPasswordField'),
+                  obscureText: true,
+                  controller: passwordText,
+                  validator: PasswordFieldValidator.validate,
+                  keyboardType: TextInputType.visiblePassword,
+                  cursorColor: aPrimaryColor,
+                  decoration: InputDecoration(
+                    hintText: "Password",
+                    icon: Icon(
+                      Icons.lock,
+                      color: aPrimaryColor,
+                    ),
+                    suffixIcon: Icon(
+                      Icons.visibility,
+                      color: aPrimaryColor,
+                    ),
+                    border: InputBorder.none,
+                  ),
+                ),
               ),
-              RoundedButton(
-                key:Key('loginButton'),
-                text: "login",
-                color: aPrimaryColor,
-                rounded: 18.0,
-                textColor: Colors.deepPurple.shade200,
-                press: () {
-                  if (_formKey.currentState.validate()) {
-                    _login(context, emailText.text, passwordText.text);
-                  }
-                },
+              Container(
+                margin: EdgeInsets.symmetric(vertical: 10),
+                width: size.width * 0.8,
+                child: TextButton(
+                  key: Key('loginButton'),
+                  child: Text("login".toUpperCase(),
+                      style: TextStyle(fontSize: 14)),
+                  style: ButtonStyle(
+                      padding: MaterialStateProperty.all<EdgeInsets>(
+                          EdgeInsets.all(15)),
+                      foregroundColor: MaterialStateProperty.all<Color>(
+                          Colors.deepPurple.shade200),
+                      // backgroundColor: background,
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18.0),
+                              side: BorderSide(color: aPrimaryColor)))),
+                  onPressed: () {
+                    if (_formKey.currentState.validate()) {
+                      _login(context, emailText.text, passwordText.text);
+                    }
+                  },
+                ),
               ),
               SizedBox(height: size.height * 0.03),
               AlreadyHaveAnAccountCheck(

@@ -27,11 +27,11 @@ class BottomNavbar extends StatelessWidget {
             backgroundColor: Colors.deepPurple,
             label: 'SEARCH',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.location_on_outlined),
-            label: 'MAP',
-            backgroundColor: Colors.deepPurple,
-          ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(Icons.location_on_outlined),
+          //   label: 'MAP',
+          //   backgroundColor: Colors.deepPurple,
+          // ),
           BottomNavigationBarItem(
             icon: Icon(Icons.message),
             label: 'PESAN',

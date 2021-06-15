@@ -28,7 +28,7 @@ class _MainScreenState extends State<MainScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.purple.shade900,
-        title: Text('Homely'),
+        title: Text('Homely', key: Key('title')),
       ),
       
       drawer: Sidebar(),
